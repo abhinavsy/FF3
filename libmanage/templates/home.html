@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+        {{ NAME | truncatewords:155 }}
+{% endblock %}
+
+{% block title%}
+        LIBRARY MANAGEMENT SERVICES
+{% endblock %}
+{% block content %}
+ {% if messages %}
+        {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+{% if author %}
+  <div>
+        <div class="row my_row_class">
+            <div class="mx-auto">
+            <p><a href="">Our Product collections</a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+<div class="mx-auto">
+    {% if author %}
+    <center>
+    <img class="my_image" src="{{author.image.url}}" alt="{{author.name}}" style="width:1180px;height:350px;">
+        </center>
+</div>
+    <br>
+<div>
+    <h1 class="text-center my_title">{{author.name}}</h1>
+</div>
+    {% else %}
+<div>
+    <img class="my_image my_image_padding" src="{% static 'img/banner.png' %}" alt="Our Book" width="1180px">
+</div>
+<br>
+<div>
+    <h1 class="text-center my_title">OUR BOOKS</h1>
+    <p class="text-justify"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+</div>
+    {% endif %}
+<div class="container">
+    <div class="row mx-auto">
+        {% for book in books %}
+        <div class="my_bottom_margin col-9 col sm-12 col-md-4 xol-lg-4">
+            <div class="card text-center" style="min-width:18rem;">
+                <a href=""><img class="card-img-top my_image" src="{{book.image.url}}" alt="{{book.name}}" style="width=360px;height:360px;"></a>
+                <div class="card-body">
+                    <h4>{{book.name}}</h4>
+                    <p> ₹ {{book.price}}<p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+        <div class="mx-auto">
+        {% if books.paginator.num_pages > 1 %}
+        <hr>
+        <div class="text-center">
+            {% for pg in books.paginator.page_range %}
+            <a href="?page={{pg}}" class="btn btn-light btn-sm {% if books.number == pg %} activate {% endif %}">{{pg}}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+         </div>
+    <br>
+</div>
+
+{% endblock %}
